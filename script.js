@@ -1,4 +1,3 @@
-
 const title = document.getElementById("title");
 console.log("By ID:", title);
 
