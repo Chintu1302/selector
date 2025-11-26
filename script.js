@@ -116,3 +116,105 @@ document.getElementById('btn-clear').addEventListener('click', () => {
     container.innerHTML = ''; 
     itemCount = 0;
 });
+
+chapter-4
+
+const container1 = document.getElementById('container');
+let itemcount = 0;
+
+document.getElementById('btn-add').addEventListener('click', () => {
+    // Create div element 
+    const item = document.createElement('div');
+    item.className = 'item';
+     
+    // Create text node
+    const text = document.createTextNode(`Item ${++itemcount}`);
+    item.appendChild(text);
+     
+     // Create delete button
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = 'Delete';
+    deleteBtn.addEventListener('click', () => {
+    item.remove();
+    });
+     
+    item.appendChild(deleteBtn);
+    container.appendChild(item);
+   });
+
+   // Remove last element
+   document.getElementById('btn-remove').addEventListener('click', () => {
+     if (container.lastChild) {
+       container.removeChild(container.lastChild);
+     }
+   });
+
+   // Clear all
+   document.getElementById('btn-clear').addEventListener('click', () => {
+     container.innerHTML = '';
+     itemCount = 0;
+   });
+
+
+   function addItemsHTML() {
+     const html = Array.from({length: 5}, (_, i) => 
+       `<div class="item">Item ${i + 1}</div>`
+     ).join('');
+     container.innerHTML += html;
+   }
+
+    // Using DocumentFragment (best performance)
+   function addItemsFragment() {
+     const fragment = document.createDocumentFragment();
+     for (let i = 0; i < 5; i++) {
+       const item = document.createElement('div');
+       item.className = 'item';
+       item.textContent = `Item ${i + 1}`;
+       fragment.appendChild(item);
+     }
+     container.appendChild(fragment);
+   }
+
+   // Clone existing element
+   function cloneFirst() {
+     const first = container.querySelector('.item');
+     if (first) {
+       const clone = first.cloneNode(true); // true = deep clone
+       container.appendChild(clone);
+     }
+   }
+
+   // Insert before
+   function insertAtStart() {
+     const item = document.createElement('div');
+     item.className = 'item';
+     item.textContent = 'First Item';
+     const firstChild = container.firstChild;
+     container.insertBefore(item, firstChild);
+   }
+
+   function createCard(title, description) {
+     // Create card div
+     const card = document.createElement('div');
+     card.className = 'card';
+     
+     // Create title
+     const h2 = document.createElement('h2');
+     h2.textContent = title;
+     card.appendChild(h2);
+     
+     // Create description
+     const p = document.createElement('p');
+     p.textContent = description;
+     card.appendChild(p);
+     
+     // Create button
+     const button = document.createElement('button');
+     button.textContent = 'Delete';
+     button.addEventListener('click', () => card.remove());
+     card.appendChild(button);
+     
+     return card;
+   }
+
+   container.appendChild(createCard('Card 1', 'Description 1'));
